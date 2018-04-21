@@ -22,8 +22,9 @@ build:
       - >
           if [ "${IS_GIT_TAG}" = "true" ]; then
             sudo -E sh -c 'echo "IS_GIT_TAG=true" >> $JOB_STATE/sdk.env'
-            export S3_PATH="s3://incoming.zephyrproject.org/tests/${METAZEPHYRSDK_CIREPO_VERSIONNUMBER}";
-            aws s3 sync TEST.* ${S3_PATH}/tests/;
+            export S3_PATH="s3://incoming.zephyrproject.org";
+            aws s3 cp TEST.* ${S3_PATH}/tests/;
+            aws s3 ls ${S3_PATH}/tests/
           fi
 
 integrations:
