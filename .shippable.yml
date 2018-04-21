@@ -18,14 +18,13 @@ build:
         options: "-e HOME=/home/buildslave --privileged=true --tty --net=bridge --user buildslave"
 
     ci:
+      - env
       - touch TEST.${SDK_TARGET}
       - >
-          if [ "${IS_GIT_TAG}" = "true" ]; then
-            sudo -E sh -c 'echo "IS_GIT_TAG=true" >> $JOB_STATE/sdk.env'
-            export S3_PATH="s3://incoming.zephyrproject.org";
-            aws s3 cp TEST.* ${S3_PATH}/tests/;
-            aws s3 ls ${S3_PATH}/tests/
-          fi
+          sudo -E sh -c 'echo "IS_GIT_TAG=true" >> $JOB_STATE/sdk.env'
+          export S3_PATH="s3://incoming.zephyrproject.org";
+          aws s3 cp TEST.* ${S3_PATH}/tests/;
+          aws s3 ls ${S3_PATH}/tests/
 
 integrations:
   generic:
